@@ -1,0 +1,336 @@
+{
+  "databaseName": "raffle",
+  "projectName": "Raffle",
+  "schema": [
+    {
+      "tableName": "raffles",
+      "columns": [
+        {
+          "columnName": "id",
+          "dataType": "int",
+          "characterMaximumLength": null,
+          "isNullable": false,
+          "isPrimaryKey": true,
+          "columnDefault": null,
+          "columnComment": ""
+        },
+        {
+          "columnName": "name",
+          "dataType": "varchar",
+          "characterMaximumLength": 255,
+          "isNullable": false,
+          "isPrimaryKey": false,
+          "columnDefault": null,
+          "columnComment": ""
+        },
+        {
+          "columnName": "description",
+          "dataType": "text",
+          "characterMaximumLength": 65535,
+          "isNullable": true,
+          "isPrimaryKey": false,
+          "columnDefault": "NULL",
+          "columnComment": ""
+        },
+        {
+          "columnName": "price",
+          "dataType": "decimal",
+          "characterMaximumLength": null,
+          "isNullable": false,
+          "isPrimaryKey": false,
+          "columnDefault": null,
+          "columnComment": ""
+        },
+        {
+          "columnName": "total_numbers",
+          "dataType": "int",
+          "characterMaximumLength": null,
+          "isNullable": false,
+          "isPrimaryKey": false,
+          "columnDefault": null,
+          "columnComment": ""
+        },
+        {
+          "columnName": "status",
+          "dataType": "enum",
+          "characterMaximumLength": 8,
+          "isNullable": true,
+          "isPrimaryKey": false,
+          "columnDefault": "'active'",
+          "columnComment": ""
+        },
+        {
+          "columnName": "created_at",
+          "dataType": "timestamp",
+          "characterMaximumLength": null,
+          "isNullable": true,
+          "isPrimaryKey": false,
+          "columnDefault": "current_timestamp()",
+          "columnComment": ""
+        },
+        {
+          "columnName": "external_id",
+          "dataType": "char",
+          "characterMaximumLength": 36,
+          "isNullable": true,
+          "isPrimaryKey": false,
+          "columnDefault": "uuid()",
+          "columnComment": ""
+        },
+        {
+          "columnName": "updated_at",
+          "dataType": "timestamp",
+          "characterMaximumLength": null,
+          "isNullable": true,
+          "isPrimaryKey": false,
+          "columnDefault": "current_timestamp()",
+          "columnComment": ""
+        }
+      ],
+      "relations": []
+    },
+    {
+      "tableName": "orders",
+      "columns": [
+        {
+          "columnName": "id",
+          "dataType": "int",
+          "characterMaximumLength": null,
+          "isNullable": false,
+          "isPrimaryKey": true,
+          "columnDefault": null,
+          "columnComment": ""
+        },
+        {
+          "columnName": "customer_name",
+          "dataType": "varchar",
+          "characterMaximumLength": 255,
+          "isNullable": false,
+          "isPrimaryKey": false,
+          "columnDefault": null,
+          "columnComment": ""
+        },
+        {
+          "columnName": "customer_phone",
+          "dataType": "varchar",
+          "characterMaximumLength": 15,
+          "isNullable": true,
+          "isPrimaryKey": false,
+          "columnDefault": "NULL",
+          "columnComment": ""
+        },
+        {
+          "columnName": "raffle_id",
+          "dataType": "int",
+          "characterMaximumLength": null,
+          "isNullable": true,
+          "isPrimaryKey": false,
+          "columnDefault": "NULL",
+          "columnComment": ""
+        },
+        {
+          "columnName": "status",
+          "dataType": "enum",
+          "characterMaximumLength": 7,
+          "isNullable": true,
+          "isPrimaryKey": false,
+          "columnDefault": "'pending'",
+          "columnComment": ""
+        },
+        {
+          "columnName": "order_date",
+          "dataType": "timestamp",
+          "characterMaximumLength": null,
+          "isNullable": true,
+          "isPrimaryKey": false,
+          "columnDefault": "current_timestamp()",
+          "columnComment": ""
+        },
+        {
+          "columnName": "external_id",
+          "dataType": "char",
+          "characterMaximumLength": 36,
+          "isNullable": true,
+          "isPrimaryKey": false,
+          "columnDefault": "uuid()",
+          "columnComment": ""
+        },
+        {
+          "columnName": "created_at",
+          "dataType": "timestamp",
+          "characterMaximumLength": null,
+          "isNullable": true,
+          "isPrimaryKey": false,
+          "columnDefault": "current_timestamp()",
+          "columnComment": ""
+        },
+        {
+          "columnName": "updated_at",
+          "dataType": "timestamp",
+          "characterMaximumLength": null,
+          "isNullable": true,
+          "isPrimaryKey": false,
+          "columnDefault": "current_timestamp()",
+          "columnComment": ""
+        }
+      ],
+      "relations": [
+        {
+          "columnName": "raffle_id",
+          "foreignTableName": "raffles",
+          "foreignColumnName": "id",
+          "relationType": "ManyToOne"
+        }
+      ]
+    },
+    {
+      "tableName": "raffle_numbers",
+      "columns": [
+        {
+          "columnName": "id",
+          "dataType": "int",
+          "characterMaximumLength": null,
+          "isNullable": false,
+          "isPrimaryKey": true,
+          "columnDefault": null,
+          "columnComment": ""
+        },
+        {
+          "columnName": "number",
+          "dataType": "int",
+          "characterMaximumLength": null,
+          "isNullable": false,
+          "isPrimaryKey": false,
+          "columnDefault": null,
+          "columnComment": ""
+        },
+        {
+          "columnName": "raffle_id",
+          "dataType": "int",
+          "characterMaximumLength": null,
+          "isNullable": true,
+          "isPrimaryKey": false,
+          "columnDefault": "NULL",
+          "columnComment": ""
+        },
+        {
+          "columnName": "status",
+          "dataType": "enum",
+          "characterMaximumLength": 9,
+          "isNullable": true,
+          "isPrimaryKey": false,
+          "columnDefault": "'available'",
+          "columnComment": ""
+        },
+        {
+          "columnName": "external_id",
+          "dataType": "char",
+          "characterMaximumLength": 36,
+          "isNullable": true,
+          "isPrimaryKey": false,
+          "columnDefault": "uuid()",
+          "columnComment": ""
+        },
+        {
+          "columnName": "created_at",
+          "dataType": "timestamp",
+          "characterMaximumLength": null,
+          "isNullable": true,
+          "isPrimaryKey": false,
+          "columnDefault": "current_timestamp()",
+          "columnComment": ""
+        },
+        {
+          "columnName": "updated_at",
+          "dataType": "timestamp",
+          "characterMaximumLength": null,
+          "isNullable": true,
+          "isPrimaryKey": false,
+          "columnDefault": "current_timestamp()",
+          "columnComment": ""
+        }
+      ],
+      "relations": [
+        {
+          "columnName": "raffle_id",
+          "foreignTableName": "raffles",
+          "foreignColumnName": "id",
+          "relationType": "ManyToOne"
+        }
+      ]
+    },
+    {
+      "tableName": "order_numbers",
+      "columns": [
+        {
+          "columnName": "id",
+          "dataType": "int",
+          "characterMaximumLength": null,
+          "isNullable": false,
+          "isPrimaryKey": true,
+          "columnDefault": null,
+          "columnComment": ""
+        },
+        {
+          "columnName": "order_id",
+          "dataType": "int",
+          "characterMaximumLength": null,
+          "isNullable": true,
+          "isPrimaryKey": false,
+          "columnDefault": "NULL",
+          "columnComment": ""
+        },
+        {
+          "columnName": "number_id",
+          "dataType": "int",
+          "characterMaximumLength": null,
+          "isNullable": true,
+          "isPrimaryKey": false,
+          "columnDefault": "NULL",
+          "columnComment": ""
+        },
+        {
+          "columnName": "external_id",
+          "dataType": "char",
+          "characterMaximumLength": 36,
+          "isNullable": true,
+          "isPrimaryKey": false,
+          "columnDefault": "uuid()",
+          "columnComment": ""
+        },
+        {
+          "columnName": "created_at",
+          "dataType": "timestamp",
+          "characterMaximumLength": null,
+          "isNullable": true,
+          "isPrimaryKey": false,
+          "columnDefault": "current_timestamp()",
+          "columnComment": ""
+        },
+        {
+          "columnName": "updated_at",
+          "dataType": "timestamp",
+          "characterMaximumLength": null,
+          "isNullable": true,
+          "isPrimaryKey": false,
+          "columnDefault": "current_timestamp()",
+          "columnComment": ""
+        }
+      ],
+      "relations": [
+        {
+          "columnName": "order_id",
+          "foreignTableName": "orders",
+          "foreignColumnName": "id",
+          "relationType": "ManyToOne"
+        },
+        {
+          "columnName": "number_id",
+          "foreignTableName": "raffle_numbers",
+          "foreignColumnName": "id",
+          "relationType": "ManyToOne"
+        }
+      ]
+    }
+  ]
+}
