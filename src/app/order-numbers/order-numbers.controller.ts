@@ -11,7 +11,7 @@ import {
     InternalServerErrorException,
     UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {ApiTags, ApiOperation, ApiResponse, ApiExcludeController} from '@nestjs/swagger';
 import { OrderNumbersService } from './order-numbers.service';
 import {
     OrderNumbersQueryDTO,
@@ -19,7 +19,7 @@ import {
 } from './order-numbers.dto';
 import { JwtAuthGuard } from '../middleware/jwt-auth.guard';
 
-@ApiTags('order-numbers')
+@ApiExcludeController()
 @Controller('order-numbers')
 export class OrderNumbersController {
     constructor(private readonly orderNumbersService: OrderNumbersService) {}

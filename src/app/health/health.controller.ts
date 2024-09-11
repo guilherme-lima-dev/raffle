@@ -1,7 +1,7 @@
 // src/app/health/health.controller.ts
 
 import { Controller, Get, Logger } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {ApiExcludeController, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {
     HealthCheck,
     HealthCheckResult,
@@ -11,7 +11,7 @@ import { HealthService } from './health.service';
 import { AppReadinessService } from '../config/app.readiness.service';
 
 @Controller('health')
-@ApiTags('Health Check')
+@ApiExcludeController()
 export class HealthController {
     private readonly logger = new Logger(HealthService.name);
 

@@ -11,7 +11,7 @@ import {
     InternalServerErrorException,
     UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {ApiTags, ApiOperation, ApiResponse, ApiExcludeController} from '@nestjs/swagger';
 import { RaffleNumbersService } from './raffle-numbers.service';
 import {
     RaffleNumbersQueryDTO,
@@ -19,7 +19,7 @@ import {
 } from './raffle-numbers.dto';
 import { JwtAuthGuard } from '../middleware/jwt-auth.guard';
 
-@ApiTags('raffle-numbers')
+@ApiExcludeController()
 @Controller('raffle-numbers')
 export class RaffleNumbersController {
     constructor(private readonly raffleNumbersService: RaffleNumbersService) {}

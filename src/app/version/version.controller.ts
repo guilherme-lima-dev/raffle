@@ -1,11 +1,11 @@
 // src/app/version/version.controller.ts
 
 import { Controller, Get, Logger } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {ApiExcludeController, ApiTags} from '@nestjs/swagger';
 import { execSync } from 'child_process';
 
 @Controller('version')
-@ApiTags('Version Check')
+@ApiExcludeController()
 export class VersionController {
     private readonly logger = new Logger(VersionController.name);
 

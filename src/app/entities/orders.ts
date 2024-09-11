@@ -34,9 +34,9 @@ export class OrdersEntity {
     @ApiProperty({ description: '', nullable: true })
     order_date: any;
 
-    @Column({ type: 'char', default: 'uuid()'})
+    @Column({ type: 'uuid', default: 'uuid()'})
     @ApiProperty({ description: '', nullable: true })
-    external_id: any;
+    external_id: string;
 
     @CreateDateColumn()
     @ApiProperty({ description: '', nullable: true })
@@ -47,7 +47,7 @@ export class OrdersEntity {
     updated_at: any;
 
     @ManyToOne(() => RafflesEntity)
-    @JoinColumn({ name: 'raffle' })
+    @JoinColumn({ name: 'raffle_id' })
     @ApiProperty({ description: 'Relacionamento com raffles.' })
     raffle: RafflesEntity;
 

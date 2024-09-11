@@ -42,7 +42,6 @@ async function bootstrap() {
             .setTitle(microserviceName)
             .setDescription(`${microserviceName} - documentação`)
             .setVersion('1.0')
-            .addTag('system')
             .build();
         const document = SwaggerModule.createDocument(app, config);
 

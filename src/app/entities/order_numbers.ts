@@ -32,12 +32,12 @@ export class OrderNumbersEntity {
     updated_at: any;
 
     @ManyToOne(() => OrdersEntity)
-    @JoinColumn({ name: 'order' })
+    @JoinColumn({ name: 'order_id' })
     @ApiProperty({ description: 'Relacionamento com orders.' })
     order: OrdersEntity;
 
     @ManyToOne(() => RaffleNumbersEntity)
-    @JoinColumn({ name: 'number' })
+    @JoinColumn({ name: 'number_id' })
     @ApiProperty({ description: 'Relacionamento com raffle_numbers.' })
     number: RaffleNumbersEntity;
 

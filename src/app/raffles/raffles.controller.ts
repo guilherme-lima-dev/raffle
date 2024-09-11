@@ -11,7 +11,7 @@ import {
     InternalServerErrorException,
     UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {ApiTags, ApiOperation, ApiResponse, ApiExcludeEndpoint} from '@nestjs/swagger';
 import { RafflesService } from './raffles.service';
 import { RafflesQueryDTO, RafflesPersistDTO } from './raffles.dto';
 import { JwtAuthGuard } from '../middleware/jwt-auth.guard';
@@ -70,7 +70,7 @@ export class RafflesController {
     }
 
     @Get()
-    
+    @ApiExcludeEndpoint()
     @ApiOperation({
         summary: 'Busca todos os Raffless.',
         description:
@@ -86,7 +86,7 @@ export class RafflesController {
     }
 
     @Put(':external_id')
-    
+    @ApiExcludeEndpoint()
     @ApiOperation({
         summary: 'Atualiza um Raffles pelo External ID.',
         description:
@@ -118,7 +118,7 @@ export class RafflesController {
     }
 
     @Delete(':external_id')
-    
+    @ApiExcludeEndpoint()
     @ApiOperation({
         summary: 'Deleta um Raffles pelo External ID.',
         description:

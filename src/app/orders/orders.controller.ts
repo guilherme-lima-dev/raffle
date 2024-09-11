@@ -11,7 +11,7 @@ import {
     InternalServerErrorException,
     UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {ApiTags, ApiOperation, ApiResponse, ApiExcludeEndpoint} from '@nestjs/swagger';
 import { OrdersService } from './orders.service';
 import { OrdersQueryDTO, OrdersPersistDTO } from './orders.dto';
 import { JwtAuthGuard } from '../middleware/jwt-auth.guard';
@@ -42,7 +42,8 @@ export class OrdersController {
             if (error.code === '23505') {
                 throw new BadRequestException('Orders já existe');
             }
-            throw new InternalServerErrorException('Erro ao criar Orders');
+            console.log(error.message);
+            throw new InternalServerErrorException(error.message);
         }
     }
 
@@ -83,61 +84,43 @@ export class OrdersController {
         return await this.ordersService.findAll();
     }
 
-    @Put(':external_id')
-    
+    @Get(':id/approve')
     @ApiOperation({
-        summary: 'Atualiza um Orders pelo External ID.',
-        description:
-            'Este endpoint atualiza os detalhes de um Orders no sistema pelo External ID fornecido.',
+        summary: 'Aprova uma ordem pelo ID.',
+        description: 'Este endpoint aprova uma ordem existente pelo ID fornecido.',
     })
     @ApiResponse({
         status: 200,
-        description: 'O Orders foi atualizado com sucesso.',
+        description: 'A ordem foi aprovada com sucesso.',
         type: OrdersQueryDTO,
     })
-    @ApiResponse({ status: 400, description: 'Dados inválidos' })
-    @ApiResponse({ status: 404, description: 'Orders não encontrado' })
+    @ApiResponse({ status: 404, description: 'Ordem não encontrada' })
     @ApiResponse({ status: 500, description: 'Erro interno no servidor' })
-    async updateByExternalId(
-        @Param('external_id') external_id: string,
-        @Body() dto: OrdersPersistDTO
-    ): Promise<OrdersQueryDTO> {
+    async approveOrder(@Param('id') id: number): Promise<OrdersQueryDTO> {
         try {
-            return await this.ordersService.updateByExternalId(
-                external_id,
-                dto
-            );
+            return await this.ordersService.approveOrder(id);
         } catch (error) {
-            if (error instanceof NotFoundException) {
-                throw new NotFoundException('Orders não encontrado');
-            }
-            throw new InternalServerErrorException('Erro ao atualizar Orders');
+            throw new NotFoundException(error.message);
         }
     }
 
-    @Delete(':external_id')
-    
+    @Get(':id/reject')
     @ApiOperation({
-        summary: 'Deleta um Orders pelo External ID.',
-        description:
-            'Este endpoint deleta um Orders no sistema pelo External ID fornecido.',
+        summary: 'Rejeita uma ordem pelo ID.',
+        description: 'Este endpoint rejeita uma ordem existente e retorna os números para disponíveis.',
     })
     @ApiResponse({
-        status: 204,
-        description: 'O Orders foi deletado com sucesso.',
+        status: 200,
+        description: 'A ordem foi rejeitada e os números foram disponibilizados novamente.',
+        type: OrdersQueryDTO,
     })
-    @ApiResponse({ status: 404, description: 'Orders não encontrado' })
+    @ApiResponse({ status: 404, description: 'Ordem não encontrada' })
     @ApiResponse({ status: 500, description: 'Erro interno no servidor' })
-    async deleteByExternalId(
-        @Param('external_id') external_id: string
-    ): Promise<void> {
+    async rejectOrder(@Param('id') id: number): Promise<OrdersQueryDTO> {
         try {
-            await this.ordersService.deleteByExternalId(external_id);
+            return await this.ordersService.rejectOrder(id);
         } catch (error) {
-            if (error instanceof NotFoundException) {
-                throw new NotFoundException('Orders não encontrado');
-            }
-            throw new InternalServerErrorException('Erro ao deletar Orders');
+            throw new NotFoundException('Ordem não encontrada');
         }
     }
 }
