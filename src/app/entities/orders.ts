@@ -6,11 +6,13 @@ import {
     DeleteDateColumn,
     PrimaryColumn,
     JoinColumn,
-    ManyToOne, PrimaryGeneratedColumn,
+    ManyToOne, PrimaryGeneratedColumn, OneToMany,
 } from 'typeorm';
 import 'reflect-metadata';
 import { ApiProperty } from '@nestjs/swagger';
 import { RafflesEntity } from './raffles';
+import {RaffleNumbersEntity} from "@app/entities/raffle_numbers";
+import {OrderNumbersEntity} from "@app/entities/order_numbers";
 
 @Entity('orders')
 export class OrdersEntity {
@@ -50,6 +52,10 @@ export class OrdersEntity {
     @JoinColumn({ name: 'raffle_id' })
     @ApiProperty({ description: 'Relacionamento com raffles.' })
     raffle: RafflesEntity;
+
+    @OneToMany(() => OrderNumbersEntity, (orderNumber) => orderNumber.order)
+    @ApiProperty({ description: 'Números associados à rifa', type: () => OrderNumbersEntity })
+    orderNumbers: OrderNumbersEntity[];
 
     toString() {
         return `${this.external_id} - ${this.customer_name}`;

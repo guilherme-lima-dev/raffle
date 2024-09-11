@@ -146,6 +146,8 @@ export class OrdersService {
             relations: ['number'],
         });
 
+        console.log(orderNumbers);
+
         if (orderNumbers.length > 0) {
             // Atualiza o status dos números para "available"
             const raffleNumbersRepository = this.dataSourceService
@@ -158,6 +160,9 @@ export class OrdersService {
 
             // Salva a atualização dos números
             await raffleNumbersRepository.save(orderNumbers.map((orderNumber) => orderNumber.number));
+
+            // Deleta os registros de order_numbers
+            await orderNumbersRepository.delete({ order });
         }
 
         // Atualiza o status da ordem para "rejected"

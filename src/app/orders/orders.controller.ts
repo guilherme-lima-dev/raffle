@@ -120,7 +120,7 @@ export class OrdersController {
         try {
             return await this.ordersService.rejectOrder(id);
         } catch (error) {
-            throw new NotFoundException('Ordem não encontrada');
+            throw new NotFoundException(error.message);
         }
     }
 }
