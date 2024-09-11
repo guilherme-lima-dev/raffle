@@ -12,9 +12,7 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule);
 
     app.enableCors({
-        origin: '*', // Permite requisições dessa origem específica
-        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos permitidos
-        credentials: true, // Permitir cookies e outras credenciais
+        origin: '*'// Permitir cookies e outras credenciais
     });
 
     app.connectMicroservice<MicroserviceOptions>({
