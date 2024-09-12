@@ -194,14 +194,21 @@ export class OrdersService {
     }
 
     async findAll(): Promise<OrdersQueryDTO[]> {
-        this.logger.log('Finding all orderss');
+        this.logger.log('Finding all orders with order number count');
+
+        // Busca as ordens junto com os números relacionados
         const entities = await this.dataSourceService
             .getDataSource()
             .getRepository(OrdersEntity)
-            .find();
-        return entities.map((entity: OrdersEntity) => this.toDTO(entity));
-    }
+            .find({
+                relations: ['orderNumbers'], // Inclui a relação com orderNumbers
+            });
 
+        // Mapeia as entidades para DTOs
+        return entities
+            .map((entity: OrdersEntity) => this.toDTO(entity))
+            .sort((a, b) => b.numbers_count - a.numbers_count);
+    }
     async updateByExternalId(
         external_id: string,
         dto: OrdersPersistDTO
@@ -258,15 +265,18 @@ export class OrdersService {
     }
 
     private toDTO(entity: OrdersEntity): OrdersQueryDTO {
-        this.logger.log(`Mapping entity to DTO: ${entity.external_id}`);
+        this.logger.log(`Mapping entity to DTO with count: ${entity.external_id}`);
+
         const dto = new OrdersQueryDTO();
-        dto.id = entity.id;
         dto.customer_name = entity.customer_name;
         dto.customer_phone = entity.customer_phone;
         dto.status = entity.status;
         dto.order_date = entity.order_date;
         dto.external_id = entity.external_id;
-        dto.external_id = entity.external_id;
+
+        // Calcula a quantidade de números comprados
+        dto.numbers_count = entity?.orderNumbers?.length ?? 0; // Conta a quantidade de orderNumbers relacionados
+
         return dto;
     }
 }
