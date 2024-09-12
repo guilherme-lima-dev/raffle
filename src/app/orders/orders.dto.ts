@@ -18,6 +18,12 @@ import { IOrdersQueryDTO, IOrdersPersistDTO } from './orders.interface';
  */
 export class OrdersQueryDTO {
     @ApiProperty({
+        example: 1,
+        description: 'ID do cliente.',
+    })
+    id: number;
+
+    @ApiProperty({
         example: 'exemplo',
         description: 'Nome do cliente.',
     })

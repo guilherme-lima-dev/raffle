@@ -268,6 +268,7 @@ export class OrdersService {
         this.logger.log(`Mapping entity to DTO with count: ${entity.external_id}`);
 
         const dto = new OrdersQueryDTO();
+        dto.id = entity.id;
         dto.customer_name = entity.customer_name;
         dto.customer_phone = entity.customer_phone;
         dto.status = entity.status;
