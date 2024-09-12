@@ -196,7 +196,6 @@ export class OrdersService {
     async findAll(): Promise<OrdersQueryDTO[]> {
         this.logger.log('Finding all orders with order number count');
 
-// Busca as ordens junto com os números relacionados
         const entities = await this.dataSourceService
             .getDataSource()
             .getRepository(OrdersEntity)
@@ -204,10 +203,8 @@ export class OrdersService {
                 relations: ['orderNumbers'], // Inclui a relação com orderNumbers
             });
 
-// Filtra as ordens que não estão com status 'rejected'
         const filteredEntities = entities.filter((entity: OrdersEntity) => entity.status !== 'rejected');
 
-// Mapeia as entidades para DTOs e ordena com base no número de números comprados
         return filteredEntities
             .map((entity: OrdersEntity) => this.toDTO(entity))
             .sort((a, b) => b.numbers_count - a.numbers_count);
