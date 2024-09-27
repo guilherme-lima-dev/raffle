@@ -53,13 +53,21 @@ export class OrdersQueryDTO {
     })
     external_id: string;
 
-    // Adiciona a contagem de números comprados
+    // Contagem de números comprados
     @ApiProperty({
         example: 5,
         description: 'Quantidade de números comprados na ordem.',
     })
     numbers_count: number;
+
+    // Lista de números associados
+    @ApiProperty({
+        example: [8, 12, 13, 18],
+        description: 'Números comprados na ordem.',
+    })
+    numbers: number[];  // Adiciona os números
 }
+
 
 
 /**

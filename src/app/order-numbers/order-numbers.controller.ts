@@ -54,7 +54,7 @@ export class OrderNumbersController {
     }
 
     @Get(':external_id')
-    
+
     @ApiOperation({
         summary: 'Busca um OrderNumbers pelo External ID.',
         description:
@@ -77,7 +77,6 @@ export class OrderNumbersController {
     }
 
     @Get()
-    
     @ApiOperation({
         summary: 'Busca todos os OrderNumberss.',
         description:
@@ -93,7 +92,7 @@ export class OrderNumbersController {
     }
 
     @Put(':external_id')
-    
+
     @ApiOperation({
         summary: 'Atualiza um OrderNumbers pelo External ID.',
         description:
@@ -127,7 +126,7 @@ export class OrderNumbersController {
     }
 
     @Delete(':external_id')
-    
+
     @ApiOperation({
         summary: 'Deleta um OrderNumbers pelo External ID.',
         description:

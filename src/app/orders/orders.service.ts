@@ -178,29 +178,32 @@ export class OrdersService {
 
 
     async findByExternalId(external_id: string): Promise<OrdersQueryDTO> {
-        this.logger.log(`Finding orders with External ID: ${external_id}`);
+        this.logger.log(`Finding order with External ID: ${external_id}`);
+
         const entity = await this.dataSourceService
             .getDataSource()
             .getRepository(OrdersEntity)
             .findOne({
                 where: { external_id },
+                relations: ['orderNumbers', 'orderNumbers.number'], // Inclui a relação com orderNumbers e o número associado
             });
 
         if (!entity) {
-            throw new NotFoundException('Orders not found');
+            throw new NotFoundException('Order not found');
         }
 
         return this.toDTO(entity);
     }
 
+
     async findAll(): Promise<OrdersQueryDTO[]> {
-        this.logger.log('Finding all orders with order number count');
+        this.logger.log('Finding all orders with order numbers');
 
         const entities = await this.dataSourceService
             .getDataSource()
             .getRepository(OrdersEntity)
             .find({
-                relations: ['orderNumbers'], // Inclui a relação com orderNumbers
+                relations: ['orderNumbers', 'orderNumbers.number'], // Inclui a relação com orderNumbers e o número associado
             });
 
         const filteredEntities = entities.filter((entity: OrdersEntity) => entity.status !== 'rejected');
@@ -209,6 +212,7 @@ export class OrdersService {
             .map((entity: OrdersEntity) => this.toDTO(entity))
             .sort((a, b) => b.numbers_count - a.numbers_count);
     }
+
     async updateByExternalId(
         external_id: string,
         dto: OrdersPersistDTO
@@ -265,7 +269,7 @@ export class OrdersService {
     }
 
     private toDTO(entity: OrdersEntity): OrdersQueryDTO {
-        this.logger.log(`Mapping entity to DTO with count: ${entity.external_id}`);
+        this.logger.log(`Mapping entity to DTO with external ID: ${entity.external_id}`);
 
         const dto = new OrdersQueryDTO();
         dto.id = entity.id;
@@ -275,9 +279,12 @@ export class OrdersService {
         dto.order_date = entity.order_date;
         dto.external_id = entity.external_id;
 
-        // Calcula a quantidade de números comprados
-        dto.numbers_count = entity?.orderNumbers?.length ?? 0; // Conta a quantidade de orderNumbers relacionados
+        // Inclui a lista de números associados ao pedido
+        dto.numbers = entity?.orderNumbers?.map((orderNumber) => orderNumber.number.number) ?? [];
+        dto.numbers_count = dto.numbers.length; // Conta a quantidade de números
 
         return dto;
     }
+
+
 }
