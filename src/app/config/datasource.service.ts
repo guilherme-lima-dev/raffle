@@ -27,7 +27,7 @@ export class DataSourceService {
                 RaffleNumbersEntity,
                 OrderNumbersEntity,
             ],
-            synchronize: false,
+            synchronize: true,
             logging: true,
             ssl: {
                 rejectUnauthorized: false,
