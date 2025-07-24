@@ -32,7 +32,7 @@ export class OrdersEntity {
     @ApiProperty({ description: '', nullable: true })
     status: string;
 
-    @Column({ type: 'timestamp', default: 'current_timestamp()' })
+    @Column({ type: 'timestamp', default: () => 'current_timestamp()' })
     @ApiProperty({ description: '', nullable: true })
     order_date: any;
 
