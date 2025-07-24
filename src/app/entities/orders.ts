@@ -36,7 +36,7 @@ export class OrdersEntity {
     @ApiProperty({ description: '', nullable: true })
     order_date: any;
 
-    @Column({ type: 'uuid', default: 'UUID()'})
+    @Column({ type: 'uuid', default: () => 'uuid()' })
     @ApiProperty({ description: '', nullable: true })
     external_id: string;
 
