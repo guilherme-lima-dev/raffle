@@ -19,7 +19,7 @@ export class OrderNumbersEntity {
     @ApiProperty({ description: '' })
     id: number;
 
-    @Column({ type: 'char', default: 'uuid()'})
+    @Column({ type: 'char', default: 'UUID()'})
     @ApiProperty({ description: '', nullable: true })
     external_id: string;
 
